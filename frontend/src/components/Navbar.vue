@@ -1,7 +1,7 @@
 <template>
+    <p> // navbar component // </p>
     <ul>
         <li> Accueil </li>
     </ul>
-    <p> // navbar component // </p>
     <hr>
 </template>

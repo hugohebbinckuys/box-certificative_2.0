@@ -5,6 +5,6 @@ import Register from './views/Register.vue'
 
 <template>
   <Navbar/> 
-  <Register/>  
+  <RouterView/> 
 
 </template>
