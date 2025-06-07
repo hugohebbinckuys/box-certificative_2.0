@@ -8,6 +8,23 @@ from backend.bdd_connection import get_db
 from backend import app # on importe le app de backendmtn et pas de app car on a créé un __init__.py 
 from flask_cors import CORS, cross_origin
 
+def userExists (username) : 
+    db = get_db()
+    cursor = db.cursor()
+
+    query = ("Select username from user")
+    cursor.execute(query, ())
+
+    print ("username recherché : ", username)
+    result = cursor.fetchall()
+    print ("liste des users trouvés : ", result)
+
+    for user in result : 
+        if username in user : 
+            return True
+    
+    return False
+
 @app.route('/createUser', methods=['OPTIONS', 'POST'])
 @cross_origin(origin='http://localhost:5173', methods=['POST', 'OPTIONS']) # configuration plus précise de cross-origin / cross-origin automatise l'ajout des bons headers cors 
 def createUser():
@@ -22,15 +39,27 @@ def createUser():
             password = data.get('password')
             role = "Student"
 
-            db = get_db()
-            cursor = db.cursor()
+            if (userExists(username)) : 
+                return jsonify({"error" : "user already exists"}), 500
+            else : 
+                db = get_db()
+                cursor = db.cursor()
 
-            query = "insert into user (username, password, role) values (%s, %s, %s)"
-            cursor.execute(query, (username, password, role))
-            db.commit() # pour confirmer l'envoie sinon pas enregistré dans bdd je crois. 
-            return 'Done', 201
+                query = "insert into user (username, password, role) values (%s, %s, %s)"
+                cursor.execute(query, (username, password, role))
+                db.commit() # pour confirmer l'envoie sinon pas enregistré dans bdd je crois. 
+                return 'Done', 201
         except Exception as e: 
             logging.error(f"Erreur {e}")
             return jsonify({"error": "erreur", "details :":str(e)}), 500
     else : 
         return jsonify({'error' : 'method is not POST'})
+    
+
+@app.route('/login', methods=['POST','OPTIONS'])
+@cross_origin(origins="http://localhost:5173", methods=['POST', 'OPTIONS'])
+def login():
+    if request.method == 'OPTIONS' : 
+        return '', 200
+    elif request.method == 'POST' : 
+        data = request.json

@@ -19,6 +19,7 @@ const createUser = async () => {
         console.log("user : ", username.value, "créé")
     } catch (error) {
         console.error("erreur lors de la création de l'utilisateur ", username.value)
+        alert("le nom d'utilisateur existe deja")
     }
 }
 
