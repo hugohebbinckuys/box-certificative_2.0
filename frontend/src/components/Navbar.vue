@@ -1,7 +1,7 @@
 <template>
-    <ul>
-        <li> Accueil </li>
-    </ul>
     <p> // navbar component // </p>
+    <ul>
+        <RouterLink to="/">accueil</RouterLink>
+    </ul>
     <hr>
 </template>
