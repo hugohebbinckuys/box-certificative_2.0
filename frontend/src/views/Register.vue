@@ -1,6 +1,10 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
+import { useStudentStore } from "../store/store.js"
+import router from "@/router"
+
+const studentStore = useStudentStore() 
 
 const username = ref("")
 const password = ref("")
@@ -8,7 +12,7 @@ const role = ref("student")
 
 const createUser = async () => {
     try {
-        console.log("est ce que on passe par ici ? ")
+        // console.log("est ce que on passe par ici ? ")
         const data = {
             username: username.value, 
             password: password.value, 
@@ -17,6 +21,8 @@ const createUser = async () => {
         console.log("envoie des informations suivantes : ", data)
         const response = await axios.post("http://127.0.0.1:5000/createUser", data)
         console.log("user : ", username.value, "créé")
+        studentStore.connect()
+        router.push('/Student')
     } catch (error) {
         console.error("erreur lors de la création de l'utilisateur ", username.value)
         alert("le nom d'utilisateur existe deja")
@@ -29,7 +35,7 @@ const createUser = async () => {
 
     <p> // register view // </p> <br>
 
-    <!-- <form :action="createUser(username, password)"> -->
+    <h3>Bienvenu jeune étudiant inscris toi </h3>
     <form action="" method="post">
         <label for="username"> Username </label>
         <input type="text" v-model="username" id="username" placeholder="Hug">

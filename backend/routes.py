@@ -25,6 +25,16 @@ def userExists (username) :
     
     return False
 
+def getUser(username) :
+    db = get_db()
+    cursor = db.cursor()
+
+    query = "Select username, password from user where username = %s"
+    cursor.execute(query, (username,))
+    userFound = cursor.fetchone()
+
+    return userFound
+
 @app.route('/createUser', methods=['OPTIONS', 'POST'])
 @cross_origin(origin='http://localhost:5173', methods=['POST', 'OPTIONS']) # configuration plus précise de cross-origin / cross-origin automatise l'ajout des bons headers cors 
 def createUser():
@@ -53,13 +63,30 @@ def createUser():
             logging.error(f"Erreur {e}")
             return jsonify({"error": "erreur", "details :":str(e)}), 500
     else : 
-        return jsonify({'error' : 'method is not POST'})
+        return jsonify({'error :' : 'method is not POST'})
     
 
-@app.route('/login', methods=['POST','OPTIONS'])
-@cross_origin(origins="http://localhost:5173", methods=['POST', 'OPTIONS'])
+@app.route('/login', methods=['GET','POST','OPTIONS'])
+@cross_origin(origin="http://localhost:5173", methods=['GET','POST','OPTIONS'])
 def login():
     if request.method == 'OPTIONS' : 
-        return '', 200
+        return '', 204
     elif request.method == 'POST' : 
-        data = request.json
+        try :
+            data = request.json
+            username = data.get('username')
+            password = data.get('password')
+
+            if (not userExists(username)) :
+                return jsonify({"error :": "user does not exist "}), 500
+        
+            else : 
+                user = getUser(username)
+                print ("user password : -", user[1], "- entered password : -", password, "-")
+                if (user[1] != password) :
+                    return jsonify({"error : ": "password is incorrect"}), 500
+                else : 
+                    return jsonify({"info : ": "user can access, password is ok"}), 200
+        except Exception as e: 
+            logging.error(f"Erreur {e}")
+            return jsonify({"error": "erreur", "details :":str(e)}), 500
