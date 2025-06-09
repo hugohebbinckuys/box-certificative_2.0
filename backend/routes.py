@@ -47,7 +47,7 @@ def createUser():
             data = request.json # transfo en json pour ensuite manipuler
             username = data.get('username')
             password = data.get('password')
-            role = "Student"
+            role = data.get('role')
 
             if (userExists(username)) : 
                 return jsonify({"error" : "user already exists"}), 500
