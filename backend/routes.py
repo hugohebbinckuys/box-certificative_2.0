@@ -49,6 +49,8 @@ def createUser():
             password = data.get('password')
             role = data.get('role')
 
+            print ("\n informations reçues : " + username, ", ", password, ", ", role)
+
             if (userExists(username)) : 
                 return jsonify({"error" : "user already exists"}), 500
             else : 

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Register from "./views/Register.vue";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
-import Student from "./views/student/student.vue"
+import Student from "./views/student/Student.vue";
 import { useStudentStore } from "./store/store";
 import NotFound from "./views/NotFound.vue";
 import AdminPage from "./views/admin/AdminPage.vue";

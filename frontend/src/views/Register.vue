@@ -8,7 +8,7 @@ const studentStore = useStudentStore()
 
 const username = ref("")
 const password = ref("")
-const role = ref("student") 
+const role = ref("Student") 
 
 const createUser = async () => {
     try {
@@ -30,7 +30,7 @@ const createUser = async () => {
 }
 
 </script>
-
+    
 <template>
 
     <p> // register view // </p> <br>

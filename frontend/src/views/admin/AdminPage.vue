@@ -1,13 +1,14 @@
 <script setup>
 import { ref } from "vue"
+import router from "@/router"
+import axios from "axios"
 
 const username = ref("")
 const password = ref("")
-const role = ref("")
+const role = ref("hgv")
 
 const createUser = async () => {
     try {
-        // console.log("est ce que on passe par ici ? ")
         const data = {
             username: username.value, 
             password: password.value, 
@@ -16,9 +17,10 @@ const createUser = async () => {
         console.log("envoie des informations suivantes : ", data)
         const response = await axios.post("http://127.0.0.1:5000/createUser", data)
         console.log("user : ", username.value, "créé")
-        router.push('/admin')
+        alert("user " + username.value + " créé avec succès")
+        location.reload()
     } catch (error) {
-        console.error("erreur lors de la création de l'utilisateur ", username.value)
+        console.error("erreur lors de la création de l'utilisateur ", username.value, " : ", error)
         alert("le nom d'utilisateur existe deja")
     }
 }
@@ -33,12 +35,11 @@ const createUser = async () => {
         <label for="password"> Password </label> 
         <input type="password" v-model="password" id="password" placeholder="e7udh/84dsed9ds@!"> <br>
         <label for="role"> Role </label>
-        <!-- <select id="role" v-model="role">
-            <option value="student">student</option>
-            <option value="teacher">teacher</option>
-            <option value="admin">admin</option>
-        </select> <br> -->
-        <input type="text" v-model="role">
+        <select id="role" v-model="role">
+            <option value="Student" selected>Student</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Admin">Admin</option>
+        </select> <br>
         <input type="submit" @click.prevent="createUser()" value="Créer mon compte"> 
     </form>
 </template>
