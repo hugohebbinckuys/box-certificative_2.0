@@ -24,7 +24,7 @@ const isAdmin = computed (() => studentStore.role === "Admin")
         <p> // Home views - admin //</p>
         <p> Bienvenue administrateur </p>
 
-        <RouterLink to="admin"> Créer un compte </RouterLink> <br><br>
+        <RouterLink to="Register"> Créer un compte </RouterLink> <br><br>
     </div>
     
 

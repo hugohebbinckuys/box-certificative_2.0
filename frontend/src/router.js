@@ -10,7 +10,7 @@ import AdminPage from "./views/admin/AdminPage.vue";
 
 const routes = [
     {path: "/", name:"Home", component: Home},
-    {path: "/register", name: 'Register', component: Register}, 
+    {path: "/register", name: 'Register', component: Register, meta:{disconnectWhenAccess:true}}, 
     {path: "/login", name: 'Login', component: Login, meta:{disconnectWhenAccess:true}}, 
     {path: "/student", name: 'Student', component: Student, meta:{requiredAuth:true}}, 
     {path: "/admin", name:AdminPage, component: AdminPage, meta:{requiredSuperAuth:true}},
@@ -35,7 +35,7 @@ router.beforeEach((to, from, next) => {
     else {
         console.log("\n -utilisateur déconnecté- \n\n")
     }
-    if (to.meta.disconnectWhenAccess && studentStore.isConnected){
+    if (to.meta.disconnectWhenAccess && studentStore.isConnected && !studentStore.isAdmin){
         if (confirm("Etes-vous sur ? Cette action vous deconnectera.")){
             studentStore.disconnect()
             return next()

@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import router from "@/router"
 import axios from "axios"
+import Register from "../Register.vue"
 
 const username = ref("")
 const password = ref("")
@@ -28,8 +29,9 @@ const createUser = async () => {
 </script>
 
 <template>
-    Salut Admin
-    <form action="" method="post">
+    // admin view // <br> <br>
+    Salut Admin <br>
+    <!-- <form action="" method="post">
         <label for="username"> Username </label>
         <input type="text" v-model="username" id="username" placeholder="Hug"> <br>
         <label for="password"> Password </label> 
@@ -41,5 +43,6 @@ const createUser = async () => {
             <option value="Admin">Admin</option>
         </select> <br>
         <input type="submit" @click.prevent="createUser()" value="Créer mon compte"> 
-    </form>
+    </form> -->
+    <Register/> 
 </template>
