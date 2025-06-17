@@ -17,9 +17,18 @@ const login = async () => {
         }
         console.log("envoie des informations suivantes : ", data)
         const response = await axios.post("http://127.0.0.1:5000/login", data)
-        console.log("user ", username, " connecté")
+        console.log("\n RESPONSE : ", response.data, "\n")
+        console.log("\n RESPONSE.ROLE :", response.data["role"])
+        const role = response.data["role"]
+        studentStore.putRole(role)
+        console.log("user ", username, " connecté, role : ", studentStore.role)
         studentStore.connect()
-        router.push('/student')
+        if (studentStore.role === "Student"){
+            router.push('/student')
+        }
+        else if (studentStore.role === "Admin"){
+            router.push('/')
+        }
     } catch (error) {
         console.error("erreur : ", error)
         alert("password incorrect")

@@ -5,9 +5,13 @@ import router from '@/router'
 const studentStore = useStudentStore() 
 
 const disconnect = () => {
-    alert("Etes vous sur ? Cette action vous déconnectera... ")
-    studentStore.disconnect()
-    router.push("/login") 
+    if (confirm("Etes vous sur ? Cette action vous déconnectera... ")){
+        studentStore.disconnect()
+        router.push("/") 
+    }
+    else {
+        return
+    }
 }
 
 </script>

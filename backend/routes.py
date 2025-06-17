@@ -29,7 +29,7 @@ def getUser(username) :
     db = get_db()
     cursor = db.cursor()
 
-    query = "Select username, password from user where username = %s"
+    query = "Select username, password, role from user where username = %s"
     cursor.execute(query, (username,))
     userFound = cursor.fetchone()
 
@@ -88,7 +88,7 @@ def login():
                 if (user[1] != password) :
                     return jsonify({"error : ": "password is incorrect"}), 500
                 else : 
-                    return jsonify({"info : ": "user can access, password is ok"}), 200
+                    return jsonify({"info": "user can access, password is ok", "role":user[2]}), 200
         except Exception as e: 
             logging.error(f"Erreur {e}")
             return jsonify({"error": "erreur", "details :":str(e)}), 500
